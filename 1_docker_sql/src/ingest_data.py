@@ -6,14 +6,14 @@ from sqlalchemy import create_engine
 from datetime import timedelta
 
 
-def ingest_data(user, password, host, port, db, csv_name):
+def ingest_data(user, password, host, port, db, csv_name, table_name):
     engine = create_engine(f"postgresql+pg8000://{user}:{password}@{host}/{db}", client_encoding='utf8')
 
     print("writing to database")
     with pd.read_csv(csv_name, chunksize=100000) as reader:
         for idx,df in enumerate(reader):
             start_time = time.monotonic()
-            df.to_sql(name="yellow_taxi_trips",con=engine, if_exists="append", index=False)
+            df.to_sql(name=table_name,con=engine, if_exists="append", index=False)
             print(f"Wrote Chunk {idx+1} in {timedelta(seconds=time.monotonic() - start_time)} seconds ..")
 
 
@@ -31,7 +31,7 @@ def main(args):
     os.system(f"wget {url} -O {csv_name}")
 
     # Ingesting Data
-    ingest_data(user, password, host, port, db, csv_name)
+    ingest_data(user, password, host, port, db, csv_name, table_name)
 
 
 if __name__ == "__main__":

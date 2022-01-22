@@ -1,8 +1,9 @@
 #!/usr/bin/bash
 
 # URL="https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2021-01.csv"
-URL="http://172.19.0.1:8000/yellow_tripdata_2021-01.csv"
-table_name="yellow_taxi_trips"
+# URL="http://172.19.0.1:8000/yellow_tripdata_2021-01.csv"
+URL="https://s3.amazonaws.com/nyc-tlc/misc/taxi+_zone_lookup.csv"
+table_name="taxi_zones"
 
 docker run -it \
   --network=1_docker_sql_default \
