@@ -10,7 +10,7 @@ def ingest_data(user, password, host, port, db, csv_name, table_name):
     engine = create_engine(f"postgresql+pg8000://{user}:{password}@{host}/{db}", client_encoding='utf8')
 
     print("writing to database")
-    with pd.read_csv(csv_name, chunksize=100000) as reader:
+    with pd.read_csv(csv_name, parse_dates=["tpep_pickup_datetime","tpep_dropoff_datetime"], chunksize=100000) as reader:
         for idx,df in enumerate(reader):
             start_time = time.monotonic()
             df.to_sql(name=table_name,con=engine, if_exists="append", index=False)
