@@ -1,3 +1,3 @@
-# Data Engineering Experiments
+# Data Engineering Zoomcamp
 
-My deeper forays into the realm of data engineering.
+Notes and Homework from the (Data Engineering Zoomcamp)["https://github.com/DataTalksClub/data-engineering-zoomcamp"] program.
