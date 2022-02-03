@@ -133,3 +133,4 @@ dmypy.json
 
 # Ignore csv files. Most are over 100MB
 *.csv
+*.parquet
