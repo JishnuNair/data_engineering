@@ -130,3 +130,6 @@ dmypy.json
 
 # Airflow
 2_airflow/logs/
+
+# Ignore csv files. Most are over 100MB
+*.csv
