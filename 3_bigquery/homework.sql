@@ -33,18 +33,18 @@ dropoff-datetime and cluster the rows based on dispatching_base_num. In this way
 --->> Question 4
 
 CREATE OR REPLACE TABLE dtc-de-course-339115.trips_data_all.external_fhv_2019_clustered_partitioned
-PARTITION BY DATE(pickup_datetime)
+PARTITION BY DATE(dropoff_datetime)
 CLUSTER BY dispatching_base_num AS
 SELECT * FROM dtc-de-course-339115.trips_data_all.external_fhv_2019;
 
 SELECT COUNT(1) AS trips 
 FROM dtc-de-course-339115.trips_data_all.external_fhv_2019_clustered_partitioned
-WHERE DATE(pickup_datetime) BETWEEN '2019-01-01' AND '2019-03-31'
+WHERE dropoff_datetime BETWEEN '2019-01-01' AND '2019-03-31'
 AND dispatching_base_num IN ('B00987', 'B02060', 'B02279');
 
 --> COUNT: 26647
 --> ESTIMATED DATA PROCESSED: 400.1MB
---> ACTUAL DATA PROCESSED: 127.5 MB
+--> ACTUAL DATA PROCESSED: 139.3 MB
 
 
 --->> Question 5
