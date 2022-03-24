@@ -1,6 +1,7 @@
 import luigi
 import wget
 import gzip
+import pandas as pd
 from datetime import datetime
 from luigi.contrib import gcs
 from luigi.format import Nop
@@ -16,17 +17,33 @@ class GetNameBasics(luigi.Task):
 
 class PushNameBasics(luigi.Task):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.gzip_file = "name_basics.tsv.gz"
+        self.tsv_file = "name_basics.tsv"
+        self.parquet_file = "name_basics.parquet"
+
     def requires(self):
         return GetNameBasics()
 
     def output(self):
-        return gcs.GCSTarget("gs://dtc_de_imdb/raw/name_basics.tsv", format=Nop)
+        return gcs.GCSTarget(f"gs://dtc_de_imdb/raw/{self.parquet_file}", format=Nop)
 
     def run(self):
 
-        with gzip.open("data/name_basics.tsv.gz","rb") as filein:
+        with gzip.open(f"data/{self.gzip_file}","rb") as filein:
             contents = filein.read()
+        
+        with open(f"data/{self.tsv_file}","wb") as fout:
+            fout.write(contents)
+        
+        # Writing to Parquet file
+        df = pd.read_csv(f"data/{self.tsv_file}",sep="\t", low_memory=False)
+        df.to_parquet(f"data/{self.parquet_file}")
 
+        with open(f"data/{self.parquet_file}","rb") as filein:
+            contents = filein.read()
+        
         with self.output().open("w") as fileout:
             fileout.write(contents)
 
@@ -42,17 +59,33 @@ class GetTitleAkas(luigi.Task):
 
 class PushTitleAkas(luigi.Task):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.gzip_file = "title_akas.tsv.gz"
+        self.tsv_file = "title_akas.tsv"
+        self.parquet_file = "title_akas.parquet"
+
     def requires(self):
-        return GetTitleAkas()
+        return GetNameBasics()
 
     def output(self):
-        return gcs.GCSTarget("gs://dtc_de_imdb/raw/title_akas.tsv", format=Nop)
+        return gcs.GCSTarget(f"gs://dtc_de_imdb/raw/{self.parquet_file}", format=Nop)
 
     def run(self):
 
-        with gzip.open("data/title_akas.tsv.gz","rb") as filein:
+        with gzip.open(f"data/{self.gzip_file}","rb") as filein:
             contents = filein.read()
+        
+        with open(f"data/{self.tsv_file}","wb") as fout:
+            fout.write(contents)
+        
+        # Writing to Parquet file
+        df = pd.read_csv(f"data/{self.tsv_file}",sep="\t", low_memory=False)
+        df.to_parquet(f"data/{self.parquet_file}")
 
+        with open(f"data/{self.parquet_file}","rb") as filein:
+            contents = filein.read()
+        
         with self.output().open("w") as fileout:
             fileout.write(contents)
 
@@ -68,17 +101,33 @@ class GetTitleBasics(luigi.Task):
 
 class PushTitleBasics(luigi.Task):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.gzip_file = "title_basics.tsv.gz"
+        self.tsv_file = "title_basics.tsv"
+        self.parquet_file = "title_basics.parquet"
+
     def requires(self):
-        return GetTitleBasics()
+        return GetNameBasics()
 
     def output(self):
-        return gcs.GCSTarget("gs://dtc_de_imdb/raw/title_basics.tsv", format=Nop)
+        return gcs.GCSTarget(f"gs://dtc_de_imdb/raw/{self.parquet_file}", format=Nop)
 
     def run(self):
 
-        with gzip.open("data/title_basics.tsv.gz","rb") as filein:
+        with gzip.open(f"data/{self.gzip_file}","rb") as filein:
             contents = filein.read()
+        
+        with open(f"data/{self.tsv_file}","wb") as fout:
+            fout.write(contents)
+        
+        # Writing to Parquet file
+        df = pd.read_csv(f"data/{self.tsv_file}",sep="\t", low_memory=False)
+        df.to_parquet(f"data/{self.parquet_file}")
 
+        with open(f"data/{self.parquet_file}","rb") as filein:
+            contents = filein.read()
+        
         with self.output().open("w") as fileout:
             fileout.write(contents)
 
@@ -94,17 +143,33 @@ class GetTitleCrew(luigi.Task):
 
 class PushTitleCrew(luigi.Task):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.gzip_file = "title_crew.tsv.gz"
+        self.tsv_file = "title_crew.tsv"
+        self.parquet_file = "title_crew.parquet"
+
     def requires(self):
-        return GetTitleCrew()
+        return GetNameBasics()
 
     def output(self):
-        return gcs.GCSTarget("gs://dtc_de_imdb/raw/title_crew.tsv", format=Nop)
+        return gcs.GCSTarget(f"gs://dtc_de_imdb/raw/{self.parquet_file}", format=Nop)
 
     def run(self):
 
-        with gzip.open("data/title_crew.tsv.gz","rb") as filein:
+        with gzip.open(f"data/{self.gzip_file}","rb") as filein:
             contents = filein.read()
+        
+        with open(f"data/{self.tsv_file}","wb") as fout:
+            fout.write(contents)
+        
+        # Writing to Parquet file
+        df = pd.read_csv(f"data/{self.tsv_file}",sep="\t", low_memory=False)
+        df.to_parquet(f"data/{self.parquet_file}")
 
+        with open(f"data/{self.parquet_file}","rb") as filein:
+            contents = filein.read()
+        
         with self.output().open("w") as fileout:
             fileout.write(contents)
 
@@ -120,17 +185,33 @@ class GetTitleEpisodes(luigi.Task):
 
 class PushTitleEpisodes(luigi.Task):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.gzip_file = "title_episodes.tsv.gz"
+        self.tsv_file = "title_episodes.tsv"
+        self.parquet_file = "title_episodes.parquet"
+
     def requires(self):
-        return GetTitleEpisodes()
+        return GetNameBasics()
 
     def output(self):
-        return gcs.GCSTarget("gs://dtc_de_imdb/raw/title_episodes.tsv", format=Nop)
+        return gcs.GCSTarget(f"gs://dtc_de_imdb/raw/{self.parquet_file}", format=Nop)
 
     def run(self):
 
-        with gzip.open("data/title_episodes.tsv.gz","rb") as filein:
+        with gzip.open(f"data/{self.gzip_file}","rb") as filein:
             contents = filein.read()
+        
+        with open(f"data/{self.tsv_file}","wb") as fout:
+            fout.write(contents)
+        
+        # Writing to Parquet file
+        df = pd.read_csv(f"data/{self.tsv_file}",sep="\t", low_memory=False)
+        df.to_parquet(f"data/{self.parquet_file}")
 
+        with open(f"data/{self.parquet_file}","rb") as filein:
+            contents = filein.read()
+        
         with self.output().open("w") as fileout:
             fileout.write(contents)
 
@@ -146,17 +227,33 @@ class GetTitlePrincipals(luigi.Task):
 
 class PushTitlePrincipals(luigi.Task):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.gzip_file = "title_principals.tsv.gz"
+        self.tsv_file = "title_principals.tsv"
+        self.parquet_file = "title_principals.parquet"
+
     def requires(self):
-        return GetTitlePrincipals()
+        return GetNameBasics()
 
     def output(self):
-        return gcs.GCSTarget("gs://dtc_de_imdb/raw/title_principals.tsv", format=Nop)
+        return gcs.GCSTarget(f"gs://dtc_de_imdb/raw/{self.parquet_file}", format=Nop)
 
     def run(self):
 
-        with gzip.open("data/title_principals.tsv.gz","rb") as filein:
+        with gzip.open(f"data/{self.gzip_file}","rb") as filein:
             contents = filein.read()
+        
+        with open(f"data/{self.tsv_file}","wb") as fout:
+            fout.write(contents)
+        
+        # Writing to Parquet file
+        df = pd.read_csv(f"data/{self.tsv_file}",sep="\t", low_memory=False)
+        df.to_parquet(f"data/{self.parquet_file}")
 
+        with open(f"data/{self.parquet_file}","rb") as filein:
+            contents = filein.read()
+        
         with self.output().open("w") as fileout:
             fileout.write(contents)
 
@@ -172,17 +269,33 @@ class GetTitleRatings(luigi.Task):
 
 class PushTitleRatings(luigi.Task):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.gzip_file = "title_ratings.tsv.gz"
+        self.tsv_file = "title_ratings.tsv"
+        self.parquet_file = "title_ratings.parquet"
+
     def requires(self):
-        return GetTitleRatings()
+        return GetNameBasics()
 
     def output(self):
-        return gcs.GCSTarget("gs://dtc_de_imdb/raw/title_ratings.tsv", format=Nop)
+        return gcs.GCSTarget(f"gs://dtc_de_imdb/raw/{self.parquet_file}", format=Nop)
 
     def run(self):
 
-        with gzip.open("data/title_ratings.tsv.gz","rb") as filein:
+        with gzip.open(f"data/{self.gzip_file}","rb") as filein:
             contents = filein.read()
+        
+        with open(f"data/{self.tsv_file}","wb") as fout:
+            fout.write(contents)
+        
+        # Writing to Parquet file
+        df = pd.read_csv(f"data/{self.tsv_file}",sep="\t", low_memory=False)
+        df.to_parquet(f"data/{self.parquet_file}")
 
+        with open(f"data/{self.parquet_file}","rb") as filein:
+            contents = filein.read()
+        
         with self.output().open("w") as fileout:
             fileout.write(contents)
 
