@@ -1,0 +1,14 @@
+version: 2
+
+sources: 
+    - name: staging
+      database: dtc-de-course-339115
+      schema: imdb_data
+      tables:
+        - name: name_basics
+        - name: title_akas
+        - name: title_basics
+        - name: title_crew
+        - name: title_episodes
+        - name: title_principals
+        - name: title_ratings
