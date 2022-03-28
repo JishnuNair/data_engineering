@@ -21,6 +21,7 @@ As mentioned above, the Luigi pipeline is scheduled using cron jobs, and will do
 
 ## Technology Stack
 
+* Docker
 * Luigi
 * GCP
 * BigQuery
