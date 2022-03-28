@@ -20,6 +20,10 @@ Use IMDB dataset for the following analyses:
 * DBT
 * Google Data Studio
 
+## Architecture Diagram
+
+![Project flow](images/flow.png)
+
 ## Data Pipeline
 
 The IMDB dataset refreshes daily, so a batch pipeline has been created using [Luigi](https://luigi.readthedocs.io/en/stable/).
