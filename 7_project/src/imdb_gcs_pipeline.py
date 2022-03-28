@@ -66,7 +66,7 @@ class PushTitleAkas(luigi.Task):
         self.parquet_file = "title_akas.parquet"
 
     def requires(self):
-        return GetNameBasics()
+        return GetTitleAkas()
 
     def output(self):
         return gcs.GCSTarget(f"gs://dtc_de_imdb/raw/{self.parquet_file}", format=Nop)
@@ -108,7 +108,7 @@ class PushTitleBasics(luigi.Task):
         self.parquet_file = "title_basics.parquet"
 
     def requires(self):
-        return GetNameBasics()
+        return GetTitleBasics()
 
     def output(self):
         return gcs.GCSTarget(f"gs://dtc_de_imdb/raw/{self.parquet_file}", format=Nop)
@@ -150,7 +150,7 @@ class PushTitleCrew(luigi.Task):
         self.parquet_file = "title_crew.parquet"
 
     def requires(self):
-        return GetNameBasics()
+        return GetTitleCrew()
 
     def output(self):
         return gcs.GCSTarget(f"gs://dtc_de_imdb/raw/{self.parquet_file}", format=Nop)
@@ -192,7 +192,7 @@ class PushTitleEpisodes(luigi.Task):
         self.parquet_file = "title_episodes.parquet"
 
     def requires(self):
-        return GetNameBasics()
+        return GetTitleEpisodes()
 
     def output(self):
         return gcs.GCSTarget(f"gs://dtc_de_imdb/raw/{self.parquet_file}", format=Nop)
@@ -234,7 +234,7 @@ class PushTitlePrincipals(luigi.Task):
         self.parquet_file = "title_principals.parquet"
 
     def requires(self):
-        return GetNameBasics()
+        return GetTitlePrincipals()
 
     def output(self):
         return gcs.GCSTarget(f"gs://dtc_de_imdb/raw/{self.parquet_file}", format=Nop)
@@ -276,7 +276,7 @@ class PushTitleRatings(luigi.Task):
         self.parquet_file = "title_ratings.parquet"
 
     def requires(self):
-        return GetNameBasics()
+        return GetTitleRatings()
 
     def output(self):
         return gcs.GCSTarget(f"gs://dtc_de_imdb/raw/{self.parquet_file}", format=Nop)
