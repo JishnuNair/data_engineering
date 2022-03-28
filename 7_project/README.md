@@ -1,3 +1,5 @@
+# Data Engineering Project: IMDB Data
+
 ## Dataset
 [IMDB Datasets](https://www.imdb.com/interfaces/)
 
@@ -5,8 +7,18 @@
 
 Use IMDB dataset for the following analyses:
 
-* Movie titles with highest ratings, by region and year
-* Is there a change in type of titles (movies, tv series, short films, etc) during 2020-2021?
+* Distribution of movie types in 2022?
+* What is the trend of movie types (theater release vs TV) from 1990 to date?
+
+## Technology Stack
+
+* Docker
+* Terraform
+* Luigi
+* GCP
+* BigQuery
+* DBT
+* Google Data Studio
 
 ## Data Pipeline
 
@@ -21,12 +33,61 @@ The major drawback of Luigi was getting it to overwrite the GCS blobs in each ru
 As mentioned above, the Luigi pipeline is scheduled using cron jobs, and will download the dataset using wget, extract the gzip archive, convert to parquet file and then upload the parquet files to Google Cloud Storage.
 
 
-## Technology Stack
+## Steps to run data ingestion pipeline
+
+To run this projects, the following software should be installed in the system:
 
 * Docker
 * Terraform
-* Luigi
-* GCP
-* BigQuery
-* DBT
-* Google Data Studio
+
+### Step 1: Clone the repository
+
+~~~sh
+git clone https://github.com/JishnuNair/data_engineering.git
+~~~
+
+### Step 2: Provison GCP assets using Terraform
+
+**Prerequisite**: Extract GCP service account json authentication file, and create environment variable GOOGLE_APPLICATION_CREDENTIALS which points to this file. 
+
+Refer: [GCP documentation on Service Account keys](https://cloud.google.com/docs/authentication/production)
+
+~~~sh
+cd data_engineering/7_project/terraform
+terraform init
+terraform apply
+~~~
+
+### Step 3: Run Data ingestion pipeline
+
+~~~sh
+cd data_engineering/7_project
+./docker_run.sh
+~~~
+
+This step can be scheduled as a cron job.
+
+
+## Data Warehouse: BigQuery
+
+Tables have been created in BigQuery based on the parquet files loaded to GCS. The ddl scripts are available in src/bq_create_tables.sql
+
+The data volumes for this dataset do not justify the use of partitioning on the data. Only clustering has been included in two of the larger tables.
+
+
+## Data Transformation: DBT
+
+Further data transformations are done in DBT to prepare the data for visualizations which address the problem statements.
+
+The main transformation done in this scenario is the aggregation of titles based on release year, region and type of title. 
+
+
+## Dashboard
+
+[IMDB Analysis](https://datastudio.google.com/s/i5nOxQ1nC80)
+
+
+## TODO
+
+* Add documentation, unit tests to DBT models
+* Implement SCD logic for data ingestion
