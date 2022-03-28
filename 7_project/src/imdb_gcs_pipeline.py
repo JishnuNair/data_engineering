@@ -1,6 +1,7 @@
 import luigi
 import wget
 import gzip
+import clear_data
 import pandas as pd
 from datetime import datetime
 from luigi.contrib import gcs
@@ -301,6 +302,11 @@ class PushTitleRatings(luigi.Task):
 
 
 if __name__ == "__main__":
+    # Clearing data from previous run
+    clear_data.remove_local_files()
+    clear_data.remove_gcs_blobs()
+
+    # Running Luigi pipeline
     luigi.build([PushNameBasics(),
     PushTitleAkas(),
     PushTitleBasics(),

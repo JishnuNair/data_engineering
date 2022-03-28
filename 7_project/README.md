@@ -64,6 +64,8 @@ terraform apply
 
 ### Step 3: Run Data ingestion pipeline
 
+Note: Before running docker_run.sh, edit the location of google application credentials json file
+
 ~~~sh
 cd data_engineering/7_project
 ./docker_run.sh
