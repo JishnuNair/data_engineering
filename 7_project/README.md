@@ -9,6 +9,8 @@ Use IMDB dataset for the following analyses:
 
 * Distribution of movie types in 2022?
 * What is the trend of movie types (theater release vs TV) from 1990 to date?
+* Top 20 Movies/TV Series per year based on rating
+* Notable directors over the years (based on popular ratings)
 
 ## Technology Stack
 
